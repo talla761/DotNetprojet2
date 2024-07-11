@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace P2FixAnAppDotNetCode.Models
@@ -27,7 +29,15 @@ namespace P2FixAnAppDotNetCode.Models
         /// </summary>//
         public void AddItem(Product product, int quantity)
         {
-            // TODO implement the method
+            // TODO implement the method (2 - En cours)
+
+            var Addpanier = new CartLine();
+            Addpanier.OrderLineId = 1;
+            Addpanier.Product = product;
+            Addpanier.Quantity = quantity;
+
+            //_context.Avis.Add(Addpanier);
+            //_context.SaveChanges();
         }
 
         /// <summary>

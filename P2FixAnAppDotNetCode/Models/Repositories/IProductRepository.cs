@@ -1,4 +1,6 @@
-﻿namespace P2FixAnAppDotNetCode.Models.Repositories
+﻿using System;
+
+namespace P2FixAnAppDotNetCode.Models.Repositories
 {
     public interface IProductRepository
     {

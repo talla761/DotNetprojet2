@@ -29,11 +29,16 @@ namespace P2FixAnAppDotNetCode.Controllers
             if (product != null)
             {
                 _cart.AddItem(product, 1);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Cart");
             }
             else
             {
-                return RedirectToAction("Index", "Product");
+                //Product[] products = _productService.GetProductById(id);
+
+                //return View(products);
+
+                _cart.AddItem(product, 1);
+                return RedirectToAction("Index", "Cart");
             }
         }
 

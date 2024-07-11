@@ -1,4 +1,7 @@
 ﻿using P2FixAnAppDotNetCode.Models.Repositories;
+using System.Collections.Generic;
+using System.Linq;
+
 
 namespace P2FixAnAppDotNetCode.Models.Services
 {
@@ -9,6 +12,10 @@ namespace P2FixAnAppDotNetCode.Models.Services
     {
         private readonly IProductRepository _productRepository;
         private readonly IOrderRepository _orderRepository;
+
+        //Ajout variable product
+        private List<Product> _product = new List<Product>();
+
 
         public ProductService(IProductRepository productRepository, IOrderRepository orderRepository)
         {
@@ -29,10 +36,13 @@ namespace P2FixAnAppDotNetCode.Models.Services
         /// <summary>
         /// Get a product form the inventory by its id
         /// </summary>
-        public Product GetProductById(int id)
+        public Product GetProductById(int idProduct)
         {
-            // TODO implement the method
-            return null;
+            // TODO implement the method (1 - En cours)
+
+            return _product.Where(p => p.Id == idProduct).FirstOrDefault();
+            
+            //return null;
         }
 
         /// <summary>
