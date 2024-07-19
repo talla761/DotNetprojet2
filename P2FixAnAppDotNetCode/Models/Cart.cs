@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace P2FixAnAppDotNetCode.Models
 {
@@ -15,13 +18,16 @@ namespace P2FixAnAppDotNetCode.Models
         /// </summary>
         public IEnumerable<CartLine> Lines => GetCartLineList();
 
+        public List<CartLine> _addPanier = new List<CartLine>();
+        private int orderLineId = 0;
+
         /// <summary>
         /// Return the actual cartline list
         /// </summary>
         /// <returns></returns>
         private List<CartLine> GetCartLineList()
         {
-            return new List<CartLine>();
+            return _addPanier; // new List<CartLine>();
         }
 
         /// <summary>
@@ -29,15 +35,34 @@ namespace P2FixAnAppDotNetCode.Models
         /// </summary>//
         public void AddItem(Product product, int quantity)
         {
+
             // TODO implement the method (2 - En cours)
+            Product existingItem = FindProductInCartLines(product.Id);
+            
+            //_addPanier.Where(p => p.Product == product).ToList();
 
-            var Addpanier = new CartLine();
-            Addpanier.OrderLineId = 1;
-            Addpanier.Product = product;
-            Addpanier.Quantity = quantity;
+            //Product product1 = _addPanier.Where(p => p.Product == product); ;
 
-            //_context.Avis.Add(Addpanier);
-            //_context.SaveChanges();
+            if (existingItem == null)
+            {
+                _addPanier.Add(new CartLine() { OrderLineId = orderLineId, Product = product, Quantity = quantity });
+                orderLineId++;
+
+            }
+            else
+            {
+                var getTheQuantity = _addPanier.FirstOrDefault(p => p.Product == existingItem).Quantity;
+                var getTheOrderLineId = _addPanier.FirstOrDefault(p => p.Product == existingItem).OrderLineId;
+
+                getTheQuantity++;
+
+                //var itemToRemove = _addPanier.Single(r => r.OrderLineId == 2);
+
+                _addPanier.RemoveAt(getTheOrderLineId);
+                _addPanier.Add(new CartLine() { OrderLineId = getTheOrderLineId, Product = existingItem, Quantity = getTheQuantity });
+
+
+            }
         }
 
         /// <summary>
@@ -52,7 +77,14 @@ namespace P2FixAnAppDotNetCode.Models
         public double GetTotalValue()
         {
             // TODO implement the method
-            return 0.0;
+
+            double results = 0;
+            foreach (var itemCart in _addPanier)
+            {
+                results += (itemCart.Quantity * itemCart.Product.Price);
+            }
+            return results;
+
         }
 
         /// <summary>
@@ -60,8 +92,9 @@ namespace P2FixAnAppDotNetCode.Models
         /// </summary>
         public double GetAverageValue()
         {
-            // TODO implement the method
-            return 0.0;
+            //double results = _addPanier.Select(a => a.Product.Price).ToList().Average();
+            double results  = _addPanier.Average(a => a.Product.Price);
+            return results;
         }
 
         /// <summary>
@@ -69,7 +102,19 @@ namespace P2FixAnAppDotNetCode.Models
         /// </summary>
         public Product FindProductInCartLines(int productId)
         {
-            // TODO implement the method
+            // TODO implement the method (3 - OK)
+
+            //var existingItem = _addPanier.Where(p => p.Product.Id == productId).ToList();
+
+            foreach (var line in _addPanier)
+            {
+                if(line.Product.Id == productId)
+                {
+                    return line.Product;
+                }
+
+            }
+
             return null;
         }
 

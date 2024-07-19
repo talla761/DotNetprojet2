@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using P2FixAnAppDotNetCode.Models;
+using P2FixAnAppDotNetCode.Models.Repositories;
 using P2FixAnAppDotNetCode.Models.Services;
 
 namespace P2FixAnAppDotNetCode.Controllers
@@ -24,6 +25,9 @@ namespace P2FixAnAppDotNetCode.Controllers
         [HttpPost]
         public RedirectToActionResult AddToCart(int id)
         {
+            //ProductService repository = new ProductService();
+            //var product = repository.GetProductById(id);
+
             Product product = _productService.GetProductById(id);
 
             if (product != null)
@@ -37,8 +41,7 @@ namespace P2FixAnAppDotNetCode.Controllers
 
                 //return View(products);
 
-                _cart.AddItem(product, 1);
-                return RedirectToAction("Index", "Cart");
+                return RedirectToAction("Index", "Product");
             }
         }
 

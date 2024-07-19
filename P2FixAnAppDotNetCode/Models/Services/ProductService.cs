@@ -13,9 +13,12 @@ namespace P2FixAnAppDotNetCode.Models.Services
         private readonly IProductRepository _productRepository;
         private readonly IOrderRepository _orderRepository;
 
-        //Ajout variable product
-        private List<Product> _product = new List<Product>();
 
+        private static List<Product> _products;
+
+        public ProductService()
+        {
+        }
 
         public ProductService(IProductRepository productRepository, IOrderRepository orderRepository)
         {
@@ -40,9 +43,7 @@ namespace P2FixAnAppDotNetCode.Models.Services
         {
             // TODO implement the method (1 - En cours)
 
-            return _product.Where(p => p.Id == idProduct).FirstOrDefault();
-            
-            //return null;
+            return _productRepository.GetAllProducts().FirstOrDefault(p => p.Id == idProduct);
         }
 
         /// <summary>
@@ -52,6 +53,13 @@ namespace P2FixAnAppDotNetCode.Models.Services
         {
             // TODO implement the method
             // update product inventory by using _productRepository.UpdateProductStocks() method.
+            foreach (var pid in cart.Lines)
+            {
+                int productItem = pid.Product.Id;
+                int qteItem = pid.Quantity;
+
+                _productRepository.UpdateProductStocks(productItem, qteItem);
+            }
         }
     }
 }
