@@ -126,6 +126,9 @@
   <data name="ErrorMissingCountry" xml:space="preserve">
     <value>Please enter a country name</value>
   </data>
+  <data name="ErrorMissingZip" xml:space="preserve">
+    <value>Please enter a postal code</value>
+  </data>	
   <data name="ErrorMissingName" xml:space="preserve">
     <value>Please enter a name</value>
   </data>
