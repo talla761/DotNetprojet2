@@ -4,7 +4,6 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>@Localizer["Numero"]</th>
             <th>@Localizer["Quantity"]</th>
             <th>@Localizer["Item"]</th>
             <th class="text-right">@Localizer["Price"]</th>
@@ -15,7 +14,6 @@
         @foreach (var line in Model.Lines)
         {
             <tr>
-                <td class="text-center">@line.OrderLineId</td>
                 <td class="text-center">@line.Quantity</td>
                 <td class="text-left">@line.Product.Name</td>
                 <td class="text-right">@line.Product.Price.ToString("c")</td>

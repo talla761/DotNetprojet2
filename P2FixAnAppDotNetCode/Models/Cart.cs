@@ -36,13 +36,9 @@ namespace P2FixAnAppDotNetCode.Models
         public void AddItem(Product product, int quantity)
         {
 
-            // TODO implement the method (2 - En cours)
+            // TODO implement the method 
             Product existingItem = FindProductInCartLines(product.Id);
             
-            //_addPanier.Where(p => p.Product == product).ToList();
-
-            //Product product1 = _addPanier.Where(p => p.Product == product); ;
-
             if (existingItem == null)
             {
                 _addPanier.Add(new CartLine() { OrderLineId = orderLineId, Product = product, Quantity = quantity });
@@ -56,11 +52,8 @@ namespace P2FixAnAppDotNetCode.Models
 
                 getTheQuantity++;
 
-                //var itemToRemove = _addPanier.Single(r => r.OrderLineId == 2);
-
                 _addPanier.RemoveAt(getTheOrderLineId);
                 _addPanier.Add(new CartLine() { OrderLineId = getTheOrderLineId, Product = existingItem, Quantity = getTheQuantity });
-
 
             }
         }
@@ -79,6 +72,7 @@ namespace P2FixAnAppDotNetCode.Models
             // TODO implement the method
 
             double results = 0;
+
             foreach (var itemCart in _addPanier)
             {
                 results += (itemCart.Quantity * itemCart.Product.Price);
@@ -90,10 +84,19 @@ namespace P2FixAnAppDotNetCode.Models
         /// <summary>
         /// Get average value of a cart
         /// </summary>
-        public double GetAverageValue()
+        public double GetAverageValue() 
         {
-            //double results = _addPanier.Select(a => a.Product.Price).ToList().Average();
-            double results  = _addPanier.Average(a => a.Product.Price);
+            int sumQte = 0;
+
+            foreach (var itemCart in _addPanier)
+            {
+                sumQte += (itemCart.Quantity);
+            }
+
+            double a = GetTotalValue();
+
+            double results = a / sumQte;
+
             return results;
         }
 
@@ -103,8 +106,6 @@ namespace P2FixAnAppDotNetCode.Models
         public Product FindProductInCartLines(int productId)
         {
             // TODO implement the method (3 - OK)
-
-            //var existingItem = _addPanier.Where(p => p.Product.Id == productId).ToList();
 
             foreach (var line in _addPanier)
             {
